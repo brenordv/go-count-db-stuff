@@ -11,7 +11,7 @@ The purpose is to frequently run some queries and ensure that certain data in th
   "queries": [
     {
       "queryName": "Foo",
-      "sql": "select count from bla where x = y and z = 42",
+      "sql": "select count(1) from bla where x = y and z = 42",
       "expectedCount": 1
     }
   ]
