@@ -31,7 +31,6 @@ func DoQueryCount(query models.CountQuery, db *sql.DB) {
 	actualCount, err := database.ExecuteCountQuery(query.Sql, db)
 	utils.ErrorHandler(err, fmt.Sprintf("Query '%s' failed to run.", query.Name))
 
-
 	var resultText string
 	success := actualCount >= 0 && query.ExpectedCount >= 0 && actualCount == query.ExpectedCount
 

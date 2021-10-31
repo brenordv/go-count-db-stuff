@@ -9,7 +9,7 @@ import (
 	"log"
 )
 
-func EnsureIsConnected(db *mssql.DB)  {
+func EnsureIsConnected(db *mssql.DB) {
 	ctx := context.Background()
 	err := db.PingContext(ctx)
 	utils.ErrorHandler(err, fmt.Sprintf("Error pinging connection: %v", err.Error()))
