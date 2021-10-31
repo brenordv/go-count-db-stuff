@@ -2,25 +2,25 @@ package database
 
 import (
 	"context"
-	"database/sql"
+	mssql "database/sql"
 	"fmt"
 	"go-count-db-stuff/internal/models"
 	"go-count-db-stuff/internal/utils"
 	"log"
 )
 
-func EnsureIsConnected(db *sql.DB)  {
+func EnsureIsConnected(db *mssql.DB)  {
 	ctx := context.Background()
 	err := db.PingContext(ctx)
 	utils.ErrorHandler(err, fmt.Sprintf("Error pinging connection: %v", err.Error()))
 }
 
-func CreateConnectionPool(cfg *models.RuntimeConfig) *sql.DB {
+func CreateConnectionPool(cfg *models.RuntimeConfig) *mssql.DB {
 	var err error
-	var db *sql.DB
+	var db *mssql.DB
 
 	log.Print("Connecting...")
-	db, err = sql.Open("sqlserver", cfg.ConnectionString)
+	db, err = mssql.Open("sqlserver", cfg.ConnectionString)
 	utils.ErrorHandler(err, fmt.Sprintf("Error creating connection pool: %v", err.Error()))
 
 	EnsureIsConnected(db)
@@ -29,37 +29,28 @@ func CreateConnectionPool(cfg *models.RuntimeConfig) *sql.DB {
 	return db
 }
 
-func RunCount(countQuery models.CountQuery, db *sql.DB) bool {
+func ExecuteCountQuery(sql string, db *mssql.DB) (int, error) {
 	ctx := context.Background()
 	EnsureIsConnected(db)
 
-	rows, err := db.QueryContext(ctx, countQuery.Sql)
-	utils.ErrorHandler(err, fmt.Sprintf("Failed to run query '%s'", countQuery.Name))
-	defer func(rows *sql.Rows) {
-		err := rows.Close()
-		utils.ErrorHandler(err, fmt.Sprintf("Failed to close rows cursor for query '%s'\n", countQuery.Name))
-	}(rows)
+	rows, err := db.QueryContext(ctx, sql)
+	if err != nil {
+		return -1, fmt.Errorf("failed to run query. %v\n", err)
+	}
 
-	successText := "SUCCESS"
-	failText := "FAILED"
+	defer func(rows *mssql.Rows) {
+		err := rows.Close()
+		utils.ErrorHandler(err, "Failed to close rows cursor for query.")
+	}(rows)
 
 	for rows.Next() {
 		var count int
 		err = rows.Scan(&count)
-		utils.ErrorHandler(err, fmt.Sprintf("Failed to read result for query '%s'", countQuery.Name))
-
-		var resultText string
-		success :=  count == countQuery.ExpectedCount
-		if success {
-			resultText = successText
-		} else {
-			resultText = failText
+		if err != nil {
+			return -1, fmt.Errorf("failed to read result for query. %v\n", err)
 		}
-
-		log.Printf("%s: %s\n", countQuery.Name, resultText)
-		return success
+		return count, nil
 	}
 
-	log.Printf("No rows returned for query '%s'. Check the SQL statements.\n", countQuery.Name)
-	return false
+	return -1, fmt.Errorf("No rows returned for query. Check the SQL statements.\n")
 }
