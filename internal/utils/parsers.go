@@ -3,7 +3,7 @@ package utils
 import (
 	"flag"
 	"fmt"
-	"go-count-db-stuff/internal/constants"
+	"github.com/brenordv/go-count-db-stuff/internal/constants"
 	"log"
 	"os"
 	"path/filepath"

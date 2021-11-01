@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"go-count-db-stuff/internal/models"
+	"github.com/brenordv/go-count-db-stuff/internal/models"
 	"log"
 	"os"
 )

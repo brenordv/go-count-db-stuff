@@ -3,10 +3,10 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"go-count-db-stuff/internal/constants"
-	"go-count-db-stuff/internal/database"
-	"go-count-db-stuff/internal/models"
-	"go-count-db-stuff/internal/utils"
+	"github.com/brenordv/go-count-db-stuff/internal/constants"
+	"github.com/brenordv/go-count-db-stuff/internal/database"
+	"github.com/brenordv/go-count-db-stuff/internal/models"
+	"github.com/brenordv/go-count-db-stuff/internal/utils"
 	"log"
 	"time"
 )
@@ -35,9 +35,9 @@ func DoQueryCount(query models.CountQuery, db *sql.DB) {
 	success := actualCount >= 0 && query.ExpectedCount >= 0 && actualCount == query.ExpectedCount
 
 	if success {
-		resultText = fmt.Sprintf("%s:%s%s%s", query.Name, constants.ColorGreen, "SUCCESS", constants.ColorReset)
+		resultText = fmt.Sprintf("%s: %s%s%s", query.Name, constants.ColorGreen, "SUCCESS", constants.ColorReset)
 	} else {
-		resultText = fmt.Sprintf("%s:%s%s%s", query.Name, constants.ColorRed, "FAILED", constants.ColorReset)
+		resultText = fmt.Sprintf("%s: %s%s%s", query.Name, constants.ColorRed, "FAILED", constants.ColorReset)
 	}
 
 	log.Println(resultText)

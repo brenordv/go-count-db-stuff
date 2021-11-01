@@ -1,4 +1,4 @@
-module go-count-db-stuff
+module github.com/brenordv/go-count-db-stuff
 
 go 1.16
 
