@@ -31,3 +31,14 @@ The purpose is to frequently run some queries and ensure that certain data in th
 gocount.exe -config=./path/to/config_file.json
 ```
 
+## Example output
+```shell
+** GO Count Stuff! (1.0.0) **
+File 'dev.config.json' was relative and was converted to absolute path: 'c:\go-count-db-stuff\dev.config.json'
+Found '2' queries to run.
+Connecting...
+Connected!
+Count general Audit Summary entries: FAILED
+Count Audit detail rows: SUCCESS
+All done! (elapsed time: 0.4723352s)
+```
