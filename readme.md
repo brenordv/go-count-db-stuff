@@ -33,9 +33,9 @@ The purpose is to frequently run some queries and ensure that certain data in th
 gocount.exe -config=./path/to/config_file.json
 ```
 
-## Example usage
+# Example usage
 
-### Configuration file
+## Configuration file
 Filename: ```c:\go-count-db-stuff\config_file.json```
 ```json
 {
@@ -55,13 +55,13 @@ Filename: ```c:\go-count-db-stuff\config_file.json```
 }
 ```
 
-### Command line
+## Command line
 ```shell
 cd c:\go-count-db-stuff
 gocount.exe -config=config_file.json
 ```
 
-### Output
+## Output
 ```shell
 ** GO Count Stuff! (1.0.0) **
 File 'config_file.json' was relative and was converted to absolute path: 'c:\go-count-db-stuff\config_file.json'
