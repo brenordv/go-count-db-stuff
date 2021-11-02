@@ -3,8 +3,10 @@ This is a somewhat useless application. It runs a bunch of count queries (select
 
 The purpose is to frequently run some queries and ensure that certain data in the database hasnt changed.
 
+
 # How to use
-## Configuraiton file
+
+## Configuration file
 ```json
 {
   "connectionString": "conn string",
@@ -31,7 +33,35 @@ The purpose is to frequently run some queries and ensure that certain data in th
 gocount.exe -config=./path/to/config_file.json
 ```
 
-## Example output
+## Example usage
+
+### Configuration file
+Filename: ```config_file.json```
+```json
+{
+  "connectionString": "Server=tcp:localhost,1433;Initial Catalog=mydb;Persist Security Info=False;User ID=root;Password=super#secret@42;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;MultipleActiveResultSets=True;",
+  "queries": [
+    {
+      "queryName": "Count general Audit Summary entries",
+      "sql": "select count(1) from AUDIT_SUMMARY where id <= 7",
+      "expectedCount": 10
+    },
+    {
+      "queryName": "Count Audit detail rows",
+      "sql": "select count(1) from AUDIT_DETAILS where id <= 12",
+      "expectedCount": 12
+    }
+  ]
+}
+```
+
+### Command line
+```shell
+cd c:\go-count-db-stuff
+gocount.exe -config=config_file.json
+```
+
+### Output
 ```shell
 ** GO Count Stuff! (1.0.0) **
 File 'dev.config.json' was relative and was converted to absolute path: 'c:\go-count-db-stuff\dev.config.json'
