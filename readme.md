@@ -36,7 +36,7 @@ gocount.exe -config=./path/to/config_file.json
 ## Example usage
 
 ### Configuration file
-Filename: ```config_file.json```
+Filename: ```c:\go-count-db-stuff\config_file.json```
 ```json
 {
   "connectionString": "Server=tcp:localhost,1433;Initial Catalog=mydb;Persist Security Info=False;User ID=root;Password=super#secret@42;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;MultipleActiveResultSets=True;",
@@ -64,7 +64,7 @@ gocount.exe -config=config_file.json
 ### Output
 ```shell
 ** GO Count Stuff! (1.0.0) **
-File 'dev.config.json' was relative and was converted to absolute path: 'c:\go-count-db-stuff\dev.config.json'
+File 'config_file.json' was relative and was converted to absolute path: 'c:\go-count-db-stuff\config_file.json'
 Found '2' queries to run.
 Connecting...
 Connected!
